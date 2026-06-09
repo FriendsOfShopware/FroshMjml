@@ -1,0 +1,49 @@
+{
+    "frosh-mjml-component": {
+        "general": {
+            "title": "MJML Komponenten",
+            "description": "Wiederverwendbare MJML E-Mail-Komponenten verwalten"
+        },
+        "list": {
+            "title": "MJML Komponenten",
+            "columnTechnicalName": "Technischer Name",
+            "columnLabel": "Bezeichnung",
+            "columnType": "Typ",
+            "buttonCreate": "Komponente erstellen",
+            "placeholderSearchBar": "MJML Komponenten durchsuchen…",
+            "messageEmpty": "Es wurden noch keine MJML Komponenten angelegt.",
+            "titleDeleteConfirm": "Komponente löschen",
+            "textDeleteConfirm": "Möchtest du die Komponente \"{name}\" wirklich löschen?",
+            "titleSidebarRefresh": "Aktualisieren"
+        },
+        "detail": {
+            "title": "MJML Komponente",
+            "titleNew": "Neue MJML Komponente",
+            "labelTechnicalName": "Technischer Name",
+            "placeholderTechnicalName": "z.B. email-header",
+            "labelLabel": "Bezeichnung",
+            "placeholderLabel": "z.B. E-Mail Header",
+            "labelType": "Typ",
+            "typeFragment": "Fragment (Inline-Baustein)",
+            "typeLayout": "Layout (Basis-Template)",
+            "labelContent": "MJML Inhalt",
+            "messageSaveError": "Komponente konnte nicht gespeichert werden."
+        },
+        "editor": {
+            "insertComponent": "Komponente einfügen",
+            "useBase": "Base-Layout verwenden",
+            "format": "Formatieren",
+            "useMjml": "MJML verwenden",
+            "previewShow": "Vorschau anzeigen",
+            "previewHide": "Vorschau ausblenden",
+            "rendering": "Vorschau wird erstellt…",
+            "previewError": "Vorschau konnte nicht erstellt werden.",
+            "docs": "MJML Doku"
+        }
+    },
+    "global": {
+        "entities": {
+            "frosh_mjml_component": "MJML Komponenten | MJML Komponente"
+        }
+    }
+}

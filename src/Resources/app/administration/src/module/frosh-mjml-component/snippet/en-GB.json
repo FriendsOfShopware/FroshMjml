@@ -1,0 +1,49 @@
+{
+    "frosh-mjml-component": {
+        "general": {
+            "title": "MJML Components",
+            "description": "Manage reusable MJML email components"
+        },
+        "list": {
+            "title": "MJML Components",
+            "columnTechnicalName": "Technical Name",
+            "columnLabel": "Label",
+            "columnType": "Type",
+            "buttonCreate": "Create Component",
+            "placeholderSearchBar": "Search MJML components…",
+            "messageEmpty": "No MJML components have been created yet.",
+            "titleDeleteConfirm": "Delete component",
+            "textDeleteConfirm": "Do you really want to delete the component \"{name}\"?",
+            "titleSidebarRefresh": "Refresh"
+        },
+        "detail": {
+            "title": "MJML Component",
+            "titleNew": "New MJML Component",
+            "labelTechnicalName": "Technical Name",
+            "placeholderTechnicalName": "e.g. email-header",
+            "labelLabel": "Label",
+            "placeholderLabel": "e.g. Email Header",
+            "labelType": "Type",
+            "typeFragment": "Fragment (inline snippet)",
+            "typeLayout": "Layout (base template)",
+            "labelContent": "MJML Content",
+            "messageSaveError": "Could not save component."
+        },
+        "editor": {
+            "insertComponent": "Insert component",
+            "useBase": "Use base layout",
+            "format": "Format",
+            "useMjml": "Use MJML",
+            "previewShow": "Show preview",
+            "previewHide": "Hide preview",
+            "rendering": "Rendering preview…",
+            "previewError": "Preview could not be rendered.",
+            "docs": "MJML docs"
+        }
+    },
+    "global": {
+        "entities": {
+            "frosh_mjml_component": "MJML Components | MJML Component"
+        }
+    }
+}

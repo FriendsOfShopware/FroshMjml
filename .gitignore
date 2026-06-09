@@ -1,0 +1,6 @@
+node_modules/
+.idea/
+*.log
+.vite/
+src/Resources/app/administration/.tmp/
+src/Resources/public/

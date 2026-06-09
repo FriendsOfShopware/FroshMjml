@@ -1,0 +1,78 @@
+<div class="frosh-mjml-editor">
+    <div class="frosh-mjml-editor__toolbar">
+        <sw-entity-single-select
+            :key="componentPickerKey"
+            entity="frosh_mjml_component"
+            :criteria="componentCriteria"
+            :value="null"
+            :disabled="disabled"
+            :label-callback="optionLabel"
+            :placeholder="$tc('frosh-mjml-component.editor.insertComponent')"
+            @update:value="onPickComponent"
+            size="small"
+        />
+        <sw-entity-single-select
+            :key="basePickerKey"
+            entity="frosh_mjml_component"
+            :criteria="baseCriteria"
+            :value="null"
+            :disabled="disabled"
+            :label-callback="optionLabel"
+            :placeholder="$tc('frosh-mjml-component.editor.useBase')"
+            @update:value="onPickBase"
+            size="small"
+        />
+        <mt-button
+            variant="secondary"
+            size="small"
+            :disabled="disabled"
+            @click="formatCode"
+        >
+            {{ $tc('frosh-mjml-component.editor.format') }}
+        </mt-button>
+        <mt-button
+            variant="secondary"
+            size="small"
+            @click="togglePreview"
+        >
+            {{ showPreview
+                ? $tc('frosh-mjml-component.editor.previewHide')
+                : $tc('frosh-mjml-component.editor.previewShow') }}
+        </mt-button>
+        <span
+            v-if="isLoadingPreview && showPreview"
+            class="frosh-mjml-editor__preview-status"
+        >
+            {{ $tc('frosh-mjml-component.editor.rendering') }}
+        </span>
+        <sw-external-link
+            class="frosh-mjml-editor__docs-link"
+            href="https://documentation.mjml.io"
+            small
+        >
+            {{ $tc('frosh-mjml-component.editor.docs') }}
+        </sw-external-link>
+    </div>
+    <div
+        class="frosh-mjml-editor__split"
+        :class="{ 'frosh-mjml-editor__split--no-preview': !showPreview }"
+    >
+        <sw-code-editor
+            ref="codeEditor"
+            v-model:value="content"
+            class="frosh-mjml-editor__code"
+            completion-mode="entity"
+            :disabled="disabled"
+            :completer-function="completerFunction"
+            :editor-config="editorConfig"
+            @mounted="onEditorReady"
+        />
+        <iframe
+            v-if="showPreview"
+            class="frosh-mjml-editor__preview"
+            title="MJML Preview"
+            sandbox
+            :srcdoc="previewHtml"
+        ></iframe>
+    </div>
+</div>

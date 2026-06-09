@@ -1,0 +1,42 @@
+{
+    "name": "frosh/mjml",
+    "description": "Compiles MJML email templates to HTML for Shopware mail sending",
+    "version": "0.0.1",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "FriendsOfShopware",
+            "homepage": "https://friendsofshopware.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Frosh\\Mjml\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Frosh\\Mjml\\FroshMjml",
+        "label": {
+            "de-DE": "MJML E-Mail Templates",
+            "en-GB": "MJML Email Templates"
+        },
+        "description": {
+            "de-DE": "Schreibe Shopware-6-E-Mail-Templates in MJML und lasse sie beim Mailversand automatisch zu responsivem HTML kompilieren — mit wiederverwendbaren Komponenten und Live-Vorschau.",
+            "en-GB": "Write Shopware 6 email templates in MJML and have them compiled to responsive HTML automatically when mails are sent — with reusable components and a live preview editor."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://github.com/FriendsOfShopware/FroshMjml",
+            "en-GB": "https://github.com/FriendsOfShopware/FroshMjml"
+        },
+        "supportLink": {
+            "de-DE": "https://github.com/FriendsOfShopware/FroshMjml/issues",
+            "en-GB": "https://github.com/FriendsOfShopware/FroshMjml/issues"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "shopware/core": "~6.7.0",
+        "shyim/mjml-php": "^0.1.1"
+    }
+}

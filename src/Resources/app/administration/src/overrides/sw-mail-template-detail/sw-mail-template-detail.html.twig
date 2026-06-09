@@ -1,0 +1,27 @@
+{% block sw_mail_template_mail_text_form_content_html_field %}
+<mt-switch
+    v-if="mailTemplate.extensions.froshMjml"
+    class="sw-mail-template-detail__mjml-toggle"
+    :label="$tc('frosh-mjml-component.editor.useMjml')"
+    v-model="mailTemplate.extensions.froshMjml.enabled"
+    :disabled="!acl.can('mail_templates.editor')"
+/>
+
+<frosh-mjml-editor
+    v-if="mailTemplate.extensions.froshMjml && mailTemplate.extensions.froshMjml.enabled"
+    :key="`${mailTemplate.mailTemplateTypeId}mjml`"
+    v-model:value="mailTemplate.extensions.froshMjml.mjmlContent"
+    class="sw-mail-template-detail__html-editor"
+    :label="$tc('sw-mail-template.detail.mailText.labelContentHtml')"
+    :disabled="!acl.can('mail_templates.editor')"
+    :mail-template-type-id="mailTemplate.mailTemplateTypeId"
+    :completer-function="outerCompleterFunction"
+    :editor-config="editorConfig"
+/>
+
+<div
+    v-show="!mailTemplate.extensions.froshMjml || !mailTemplate.extensions.froshMjml.enabled"
+>
+    {% parent() %}
+</div>
+{% endblock %}

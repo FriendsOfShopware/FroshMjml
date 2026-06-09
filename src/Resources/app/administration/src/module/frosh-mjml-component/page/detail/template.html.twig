@@ -1,0 +1,95 @@
+<sw-page
+    class="frosh-mjml-component-detail"
+    :showSearchBar="false"
+>
+    <template #smart-bar-header>
+        <h2>{{ title }}</h2>
+    </template>
+
+    <template #language-switch>
+        <sw-language-switch
+            :disabled="isNewComponent"
+            :save-changes-function="saveOnLanguageChange"
+            :abort-change-function="abortOnLanguageChange"
+            :save-permission="acl.can('frosh_mjml_component.editor')"
+            @on-change="onChangeLanguage"
+        />
+    </template>
+
+    <template #smart-bar-actions>
+        <mt-button
+            v-tooltip.bottom="{ message: 'ESC', appearance: 'light' }"
+            :disabled="isLoading"
+            size="default"
+            @click="onCancel"
+        >
+            {{ $tc('global.default.cancel') }}
+        </mt-button>
+        <sw-button-process
+            v-model:processSuccess="isSaveSuccessful"
+            v-tooltip.bottom="tooltipSave"
+            variant="primary"
+            :is-loading="isLoading"
+            :disabled="isLoading || !allowSave || undefined"
+            @click.prevent="onSave"
+        >
+            {{ $tc('global.default.save') }}
+        </sw-button-process>
+    </template>
+
+    <template #content>
+        <sw-card-view>
+            <template v-if="isLoading">
+                <sw-skeleton variant="detail-bold"/>
+                <sw-skeleton/>
+            </template>
+
+            <template v-else-if="component">
+                <sw-language-info
+                    :entity-description="identifier"
+                    :is-new-entity="isNewComponent"
+                />
+                <mt-card
+                    :title="$tc('frosh-mjml-component.detail.title')"
+                    position-identifier="frosh-mjml-component-detail-info"
+                >
+                    <sw-container
+                        columns="1fr 1fr 1fr"
+                        gap="30px"
+                    >
+                        <mt-text-field
+                            v-model="component.technicalName"
+                            :error="componentTechnicalNameError"
+                            required
+                            :label="$tc('frosh-mjml-component.detail.labelTechnicalName')"
+                            :placeholder="$tc('frosh-mjml-component.detail.placeholderTechnicalName')"
+                            :disabled="!allowSave || undefined"
+                        />
+                        <mt-text-field
+                            v-model="component.label"
+                            :label="$tc('frosh-mjml-component.detail.labelLabel')"
+                            :placeholder="$tc('frosh-mjml-component.detail.placeholderLabel')"
+                            :disabled="!allowSave || undefined"
+                        />
+                        <mt-select
+                            v-model="component.type"
+                            :label="$tc('frosh-mjml-component.detail.labelType')"
+                            :options="typeOptions"
+                            :disabled="!allowSave || undefined"
+                        />
+                    </sw-container>
+                </mt-card>
+                <mt-card
+                    :title="$tc('frosh-mjml-component.detail.labelContent')"
+                    position-identifier="frosh-mjml-component-detail-content"
+                >
+                    <frosh-mjml-editor
+                        v-model:value="component.mjmlContent"
+                        :fragment="isFragment"
+                        :disabled="!allowSave || undefined"
+                    />
+                </mt-card>
+            </template>
+        </sw-card-view>
+    </template>
+</sw-page>

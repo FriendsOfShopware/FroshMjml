@@ -1,0 +1,124 @@
+<sw-page class="frosh-mjml-component-list">
+    <template #search-bar>
+        <sw-search-bar
+            initial-search-type="frosh_mjml_component"
+            :initial-search="term"
+            :placeholder="$tc('frosh-mjml-component.list.placeholderSearchBar')"
+            @search="onSearch"
+        />
+    </template>
+
+    <template #smart-bar-header>
+        <h2>
+            {{ $tc('frosh-mjml-component.list.title') }}
+            <span
+                v-if="!isLoading"
+                class="sw-page__smart-bar-amount"
+            >({{ total }})</span>
+        </h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <mt-button
+            v-tooltip="{
+                message: $tc('sw-privileges.tooltip.warning'),
+                disabled: acl.can('frosh_mjml_component.creator'),
+                showOnDisabledElements: true,
+            }"
+            :disabled="!acl.can('frosh_mjml_component.creator') || undefined"
+            variant="primary"
+            size="default"
+            @click="$router.push({ name: 'frosh.mjml.component.create' })"
+        >
+            {{ $tc('frosh-mjml-component.list.buttonCreate') }}
+        </mt-button>
+    </template>
+
+    <template #content>
+        <sw-entity-listing
+            v-if="isLoading || items"
+            ref="listing"
+            :repository="repository"
+            :columns="columns"
+            :items="items"
+            :allow-view="acl.can('frosh_mjml_component.viewer')"
+            :allow-edit="acl.can('frosh_mjml_component.editor')"
+            :allow-delete="acl.can('frosh_mjml_component.deleter')"
+            :show-selection="acl.can('frosh_mjml_component.deleter')"
+            :full-page="false"
+            detail-route="frosh.mjml.component.detail"
+            :disable-data-fetching="true"
+            :sort-by="sortBy"
+            :sort-direction="sortDirection"
+            identifier="frosh-mjml-component-list"
+            :is-loading="isLoading"
+            @page-change="onPageChange"
+            @column-sort="onSortColumn"
+            @update-records="updateTotal"
+        >
+            <template #column-type="{ item }">
+                {{ item.type === 'layout'
+                    ? $tc('frosh-mjml-component.detail.typeLayout')
+                    : $tc('frosh-mjml-component.detail.typeFragment') }}
+            </template>
+
+            <template #actions="{ item }">
+                <sw-context-menu-item
+                    :disabled="!acl.can('frosh_mjml_component.editor')"
+                    :router-link="{ name: 'frosh.mjml.component.detail', params: { id: item.id } }"
+                >
+                    {{ $tc('global.default.edit') }}
+                </sw-context-menu-item>
+                <sw-context-menu-item
+                    variant="danger"
+                    :disabled="!acl.can('frosh_mjml_component.deleter')"
+                    @click="onDelete(item.id)"
+                >
+                    {{ $tc('global.default.delete') }}
+                </sw-context-menu-item>
+            </template>
+
+            <template #action-modals="{ item }">
+                <sw-modal
+                    v-if="showDeleteModal === item.id"
+                    :title="$tc('frosh-mjml-component.list.titleDeleteConfirm')"
+                    @modal-close="onCloseDeleteModal"
+                >
+                    <p>
+                        {{ $tc('frosh-mjml-component.list.textDeleteConfirm', 0, { name: item.technicalName }) }}
+                    </p>
+                    <template #modal-footer>
+                        <mt-button
+                            size="default"
+                            @click="onCloseDeleteModal"
+                        >
+                            {{ $tc('global.default.cancel') }}
+                        </mt-button>
+                        <mt-button
+                            size="default"
+                            variant="critical"
+                            @click="onConfirmDelete(item.id)"
+                        >
+                            {{ $tc('global.default.delete') }}
+                        </mt-button>
+                    </template>
+                </sw-modal>
+            </template>
+        </sw-entity-listing>
+        <sw-empty-state
+            v-if="!isLoading && !total"
+            icon="regular-file-text"
+            :title="$tc('frosh-mjml-component.list.messageEmpty')"
+        />
+    </template>
+
+    <template #sidebar>
+        <sw-sidebar>
+            <sw-sidebar-item
+                icon="regular-undo"
+                :title="$tc('frosh-mjml-component.list.titleSidebarRefresh')"
+                @click="onRefresh"
+            />
+        </sw-sidebar>
+    </template>
+</sw-page>
