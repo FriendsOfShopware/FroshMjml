@@ -1,0 +1,16 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    scanFiles:
+        - phpstan-stubs/MailDataSimulator.php
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
+        # StringTemplateRenderer: Will be internal in v6.8.0
+        -
+            identifier: method.deprecatedClass
+            message: "#StringTemplateRenderer#"
+    excludePaths:
+        - vendor (?)

@@ -4,6 +4,9 @@ namespace Frosh\Mjml\Entity\Component;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
+/**
+ * @extends EntityCollection<FroshMjmlComponentTranslationEntity>
+ */
 class FroshMjmlComponentTranslationCollection extends EntityCollection
 {
     public function getApiAlias(): string

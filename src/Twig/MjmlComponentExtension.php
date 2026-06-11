@@ -42,7 +42,7 @@ class MjmlComponentExtension extends AbstractExtension
     public function renderEmbedded(Environment $environment, array $twigContext, string $name, string $body, array $vars = []): string
     {
         $context = $twigContext['context'] ?? null;
-        $salesChannelContext = $context instanceof Context ? $context : Context::createDefaultContext();
+        $salesChannelContext = $context instanceof Context ? $context : Context::createCLIContext();
 
         $content = $this->loader->loadContent($name, $salesChannelContext);
         if ($content === null) {
@@ -57,7 +57,7 @@ class MjmlComponentExtension extends AbstractExtension
     public function loadBase(Environment $environment, array $twigContext, string $name): TemplateWrapper
     {
         $context = $twigContext['context'] ?? null;
-        $salesChannelContext = $context instanceof Context ? $context : Context::createDefaultContext();
+        $salesChannelContext = $context instanceof Context ? $context : Context::createCLIContext();
 
         $content = $this->loader->loadContent($name, $salesChannelContext);
 
@@ -67,7 +67,7 @@ class MjmlComponentExtension extends AbstractExtension
     public function renderComponent(Environment $environment, array $twigContext, string $name, array $vars = []): string
     {
         $context = $twigContext['context'] ?? null;
-        $salesChannelContext = $context instanceof Context ? $context : Context::createDefaultContext();
+        $salesChannelContext = $context instanceof Context ? $context : Context::createCLIContext();
 
         $content = $this->loader->loadContent($name, $salesChannelContext);
         if ($content === null) {

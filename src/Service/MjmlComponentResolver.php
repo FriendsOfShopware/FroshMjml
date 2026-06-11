@@ -2,7 +2,7 @@
 
 namespace Frosh\Mjml\Service;
 
-use Frosh\Mjml\Entity\Component\FroshMjmlComponentEntity;
+use Frosh\Mjml\Entity\Component\FroshMjmlComponentCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -13,7 +13,7 @@ class MjmlComponentResolver
     private const MAX_DEPTH = 5;
 
     /**
-     * @param EntityRepository<FroshMjmlComponentEntity> $froshMjmlComponentRepository
+     * @param EntityRepository<FroshMjmlComponentCollection> $froshMjmlComponentRepository
      */
     public function __construct(
         private readonly EntityRepository $froshMjmlComponentRepository,
@@ -54,6 +54,10 @@ class MjmlComponentResolver
             },
             $mjml,
         );
+
+        if ($resolved === null) {
+            throw new \RuntimeException('Failed to resolve mj-include components: ' . preg_last_error_msg());
+        }
 
         if (str_contains($resolved, '<mj-include')) {
             return $this->resolveAtDepth($resolved, $context, $depth + 1);
