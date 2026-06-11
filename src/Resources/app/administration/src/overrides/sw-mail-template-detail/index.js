@@ -33,4 +33,13 @@ Component.override('sw-mail-template-detail', {
             }
         },
     },
+
+    methods: {
+        onMjmlToggle(value) {
+            const config = this.mailTemplate?.extensions?.froshMjml;
+            if (config) {
+                config.enabled = value;
+            }
+        },
+    },
 });

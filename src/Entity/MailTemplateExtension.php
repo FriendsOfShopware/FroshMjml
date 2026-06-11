@@ -23,4 +23,9 @@ class MailTemplateExtension extends EntityExtension
                 ->addFlags(new ApiAware())
         );
     }
+
+    public function getDefinitionClass(): string
+    {
+        return MailTemplateDefinition::class;
+    }
 }
