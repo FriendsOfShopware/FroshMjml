@@ -1,4 +1,5 @@
 import { formatMjml } from './format-mjml';
+import { mjmlCompleter, mergeCompleters } from './mjml-completer';
 import template from './frosh-mjml-editor.html.twig';
 import './frosh-mjml-editor.scss';
 
@@ -90,6 +91,10 @@ Component.register('frosh-mjml-editor', {
             set(value) {
                 this.$emit('update:value', value);
             },
+        },
+
+        mergedCompleterFunction() {
+            return mergeCompleters(this.completerFunction, mjmlCompleter);
         },
     },
 

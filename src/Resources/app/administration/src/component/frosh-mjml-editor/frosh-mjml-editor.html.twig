@@ -63,7 +63,7 @@
             class="frosh-mjml-editor__code"
             completion-mode="entity"
             :disabled="disabled"
-            :completer-function="completerFunction"
+            :completer-function="mergedCompleterFunction"
             :editor-config="editorConfig"
             @mounted="onEditorReady"
         />
