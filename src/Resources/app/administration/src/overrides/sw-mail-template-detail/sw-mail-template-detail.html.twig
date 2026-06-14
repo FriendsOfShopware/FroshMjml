@@ -3,8 +3,9 @@
     v-if="mailTemplate.extensions.froshMjml"
     class="sw-mail-template-detail__mjml-toggle"
     :label="$tc('frosh-mjml-component.editor.useMjml')"
-    v-model="mailTemplate.extensions.froshMjml.enabled"
+    :checked="mailTemplate.extensions.froshMjml.enabled"
     :disabled="!acl.can('mail_templates.editor')"
+    @change="onMjmlToggle"
 />
 
 <frosh-mjml-editor

@@ -35,4 +35,9 @@ class LanguageExtension extends EntityExtension
             ))->addFlags(new CascadeDelete()),
         );
     }
+
+    public function getDefinitionClass(): string
+    {
+        return LanguageExtension::class;
+    }
 }
