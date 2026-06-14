@@ -3,7 +3,7 @@
 namespace Frosh\Mjml\Controller;
 
 use Frosh\Mjml\MjmlCompiler;
-use Shopware\Core\Content\MailTemplate\Aggregate\MailTemplateType\MailTemplateTypeEntity;
+use Shopware\Core\Content\MailTemplate\Aggregate\MailTemplateType\MailTemplateTypeCollection;
 use Shopware\Core\Content\MailTemplate\Service\MailDataSimulator;
 use Shopware\Core\Framework\Adapter\Twig\StringTemplateRenderer;
 use Shopware\Core\Framework\Context;
@@ -21,9 +21,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class MjmlPreviewController extends AbstractController
 {
     /**
-     * @param EntityRepository<MailTemplateTypeEntity> $mailTemplateTypeRepository
+     * @param EntityRepository<MailTemplateTypeCollection> $mailTemplateTypeRepository
      */
     public function __construct(
+        // @phpstan-ignore-next-line parameter.deprecatedClass
         private readonly StringTemplateRenderer $templateRenderer,
         private readonly MjmlCompiler $compiler,
         private readonly EntityRepository $mailTemplateTypeRepository,

@@ -2,7 +2,7 @@
 
 namespace Frosh\Mjml\Service;
 
-use Frosh\Mjml\Entity\Component\FroshMjmlComponentEntity;
+use Frosh\Mjml\Entity\Component\FroshMjmlComponentCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -13,7 +13,7 @@ class MjmlComponentLoader
     private array $cache = [];
 
     /**
-     * @param EntityRepository<FroshMjmlComponentEntity> $froshMjmlComponentRepository
+     * @param EntityRepository<FroshMjmlComponentCollection> $froshMjmlComponentRepository
      */
     public function __construct(
         private readonly EntityRepository $froshMjmlComponentRepository,

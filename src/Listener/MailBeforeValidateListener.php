@@ -2,6 +2,9 @@
 
 namespace Frosh\Mjml\Listener;
 
+use Frosh\Mjml\Entity\MailTemplate\FroshMjmlMailTemplateEntity;
+use Shopware\Core\Content\MailTemplate\MailTemplateCollection;
+use Shopware\Core\Content\MailTemplate\MailTemplateEntity;
 use Shopware\Core\Content\MailTemplate\Service\Event\MailBeforeValidateEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -9,6 +12,9 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 readonly class MailBeforeValidateListener
 {
+    /**
+     * @param EntityRepository<MailTemplateCollection> $mailTemplateRepository
+     */
     public function __construct(
         private EntityRepository $mailTemplateRepository,
     ) {
@@ -24,10 +30,12 @@ readonly class MailBeforeValidateListener
             return;
         }
 
+        /** @var MailTemplateEntity|null $mailTemplate */
         $mailTemplate = $this->mailTemplateRepository
             ->search(new Criteria([$templateId]), $event->getContext())
             ->first();
 
+        /** @var FroshMjmlMailTemplateEntity|null $config */
         $config = $mailTemplate?->getExtension('froshMjml');
         if ($config === null || !$config->isEnabled()) {
             return;
