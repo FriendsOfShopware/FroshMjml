@@ -3,9 +3,9 @@
 namespace Frosh\Mjml;
 
 use Frosh\Mjml\Service\MjmlComponentResolver;
-use Mjml\Mjml;
-use Mjml\MjmlOptions;
-use Mjml\Validation\ValidationLevel;
+use MjmlPHP\Mjml;
+use MjmlPHP\MjmlOptions;
+use MjmlPHP\Validation\ValidationLevel;
 use Shopware\Core\Framework\Context;
 
 readonly class MjmlCompiler
