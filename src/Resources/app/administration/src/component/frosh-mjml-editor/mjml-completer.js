@@ -4,7 +4,9 @@ const TAG_SCORE = 1100;
 const ATTR_SCORE = 1000;
 
 const attrSet = new Set();
-Object.values(MJML_TAGS).forEach((attrs) => attrs.forEach((a) => attrSet.add(a)));
+Object.values(MJML_TAGS).forEach((attrs) =>
+    attrs.forEach((a) => attrSet.add(a))
+);
 
 const tagItems = Object.keys(MJML_TAGS).map((tag) => ({
     caption: tag,

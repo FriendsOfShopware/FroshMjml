@@ -49,9 +49,7 @@ class MjmlComponentResolver
 
         $resolved = preg_replace_callback(
             '/<mj-include\s+name="([^"]+)"\s*\/>/',
-            static function (array $match) use ($contentMap): string {
-                return $contentMap[$match[1]] ?? '';
-            },
+            static fn(array $match): string => $contentMap[$match[1]] ?? '',
             $mjml,
         );
 
