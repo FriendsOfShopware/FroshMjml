@@ -8,7 +8,7 @@ responsive HTML at send time — pure PHP (`shyim/mjml-php`), no Node required.
 
 ## Requirements
 
-- Shopware ~6.7.0
+- Shopware ~6.6.0
 - PHP 8.2+
 
 ## Installation

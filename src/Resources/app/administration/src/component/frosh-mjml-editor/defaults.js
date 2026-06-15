@@ -11,3 +11,10 @@ export const DEFAULT_TEMPLATE = `<mjml>
 
 export const DEFAULT_FRAGMENT = `<mj-text font-size="18px" font-weight="bold">{{ headline }}</mj-text>
 <mj-text>{{ content }}</mj-text>`;
+
+export function extendsLayoutTemplate(technicalName) {
+    return `{% extends mjml_base('${technicalName}') %}
+{% block content %}
+
+{% endblock %}`;
+}
