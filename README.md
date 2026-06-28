@@ -1,9 +1,6 @@
 # FroshMjml
 
-> ⚠️ **Work in progress** — this plugin is still under active development and not
-> yet production-ready. Expect breaking changes.
-
-MJML email templates for Shopware 6.7. MJML in a mail's HTML body is compiled to
+MJML email templates for Shopware 6 MJML in a mail's HTML body is compiled to
 responsive HTML at send time — pure PHP (`shyim/mjml-php`), no Node required.
 
 ## Requirements
