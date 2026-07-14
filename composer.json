@@ -1,7 +1,7 @@
 {
     "name": "frosh/mjml",
     "description": "Compiles MJML email templates to HTML for Shopware mail sending",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
