@@ -8,15 +8,20 @@ use Shopware\Core\Content\MailTemplate\MailTemplateEntity;
 use Shopware\Core\Content\MailTemplate\Service\Event\MailBeforeValidateEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\System\SalesChannel\SalesChannelCollection;
+use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 readonly class MailBeforeValidateListener
 {
     /**
      * @param EntityRepository<MailTemplateCollection> $mailTemplateRepository
+     * @param EntityRepository<SalesChannelCollection> $salesChannelRepository
      */
     public function __construct(
         private EntityRepository $mailTemplateRepository,
+        private EntityRepository $salesChannelRepository,
     ) {
     }
 
@@ -48,6 +53,36 @@ readonly class MailBeforeValidateListener
 
         $data['contentHtml'] = $mjml;
         $event->setData($data);
+
+        $this->provideSalesChannelWithoutHeaderFooter($event);
+    }
+
+    private function provideSalesChannelWithoutHeaderFooter(MailBeforeValidateEvent $event): void
+    {
+        $templateData = $event->getTemplateData();
+        if (($templateData['salesChannel'] ?? null) instanceof SalesChannelEntity) {
+            return;
+        }
+
+        $salesChannelId = $event->getData()['salesChannelId'] ?? null;
+        if (!\is_string($salesChannelId)) {
+            return;
+        }
+
+        $criteria = new Criteria([$salesChannelId]);
+        $criteria->getAssociation('domains')
+            ->addFilter(new EqualsFilter('languageId', $event->getContext()->getLanguageId()));
+
+        $salesChannel = $this->salesChannelRepository
+            ->search($criteria, $event->getContext())
+            ->getEntities()
+            ->first();
+
+        if ($salesChannel === null) {
+            return;
+        }
+
+        $event->addTemplateData('salesChannel', $salesChannel);
     }
 
     private function resolveTemplateId(array $data): ?string
