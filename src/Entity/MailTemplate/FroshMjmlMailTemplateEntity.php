@@ -12,7 +12,7 @@ class FroshMjmlMailTemplateEntity extends Entity
 
     protected string $mailTemplateId;
 
-    protected bool $enabled = false;
+    protected ?bool $enabled = null;
 
     protected ?string $mjmlContent = null;
 
@@ -30,12 +30,12 @@ class FroshMjmlMailTemplateEntity extends Entity
         $this->mailTemplateId = $mailTemplateId;
     }
 
-    public function isEnabled(): bool
+    public function getEnabled(): ?bool
     {
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): void
+    public function setEnabled(?bool $enabled): void
     {
         $this->enabled = $enabled;
     }

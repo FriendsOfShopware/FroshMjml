@@ -10,6 +10,8 @@ class FroshMjmlMailTemplateTranslationEntity extends TranslationEntity
 
     protected ?FroshMjmlMailTemplateEntity $froshMjmlMailTemplate = null;
 
+    protected ?bool $enabled = null;
+
     protected ?string $mjmlContent = null;
 
     public function getFroshMjmlMailTemplateId(): string
@@ -30,6 +32,16 @@ class FroshMjmlMailTemplateTranslationEntity extends TranslationEntity
     public function setFroshMjmlMailTemplate(?FroshMjmlMailTemplateEntity $froshMjmlMailTemplate): void
     {
         $this->froshMjmlMailTemplate = $froshMjmlMailTemplate;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(?bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
     public function getMjmlContent(): ?string

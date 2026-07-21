@@ -42,7 +42,7 @@ readonly class MailBeforeValidateListener
 
         /** @var FroshMjmlMailTemplateEntity|null $config */
         $config = $mailTemplate?->getExtension('froshMjml');
-        if ($config === null || !$config->isEnabled()) {
+        if ($config === null || $config->getTranslation('enabled') !== true) {
             return;
         }
 

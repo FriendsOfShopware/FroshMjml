@@ -4,7 +4,6 @@ namespace Frosh\Mjml\Entity\MailTemplate;
 
 use Shopware\Core\Content\MailTemplate\MailTemplateDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
@@ -39,7 +38,7 @@ class FroshMjmlMailTemplateDefinition extends EntityDefinition
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new PrimaryKey(), new Required(), new ApiAware()),
             (new FkField('mail_template_id', 'mailTemplateId', MailTemplateDefinition::class))->addFlags(new Required(), new ApiAware()),
-            (new BoolField('enabled', 'enabled'))->addFlags(new ApiAware()),
+            (new TranslatedField('enabled'))->addFlags(new ApiAware()),
             (new TranslatedField('mjmlContent'))->addFlags(new ApiAware()),
             (new TranslationsAssociationField(FroshMjmlMailTemplateTranslationDefinition::class, 'frosh_mjml_mail_template_id'))->addFlags(new ApiAware(), new Required()),
             (new OneToOneAssociationField('mailTemplate', 'mail_template_id', 'id', MailTemplateDefinition::class, false))->addFlags(new ApiAware()),
