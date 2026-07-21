@@ -3,6 +3,7 @@
 namespace Frosh\Mjml\Entity\MailTemplate;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
@@ -37,6 +38,7 @@ class FroshMjmlMailTemplateTranslationDefinition extends EntityTranslationDefini
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
+            (new BoolField('enabled', 'enabled'))->addFlags(new ApiAware()),
             (new LongTextField('mjml_content', 'mjmlContent'))->addFlags(new ApiAware(), new AllowHtml(false)),
         ]);
     }

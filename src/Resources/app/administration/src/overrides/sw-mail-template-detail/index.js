@@ -11,28 +11,65 @@ const { Criteria } = Shopware.Data;
 Component.override('sw-mail-template-detail', {
     template,
 
+    data() {
+        return {
+            froshMjmlHasParentLanguage: false,
+            froshMjmlInheritedEnabled: null,
+        };
+    },
+
+    computed: {
+        froshMjmlConfig() {
+            return this.mailTemplate?.extensions?.froshMjml ?? null;
+        },
+
+        froshMjmlEnabled() {
+            const config = this.froshMjmlConfig;
+            if (!config) {
+                return false;
+            }
+
+            if (config.enabled !== null && config.enabled !== undefined) {
+                return config.enabled;
+            }
+
+            return (
+                this.froshMjmlInheritedEnabled ??
+                config.translated?.enabled ??
+                false
+            );
+        },
+    },
+
     watch: {
-        'mailTemplate.id': {
+        mailTemplate: {
             immediate: true,
             handler() {
-                if (
-                    this.mailTemplate &&
-                    !this.mailTemplate.extensions.froshMjml
-                ) {
+                if (!this.mailTemplate?.id) {
+                    return;
+                }
+
+                if (!this.mailTemplate.extensions.froshMjml) {
                     const config = this.repositoryFactory
                         .create('frosh_mjml_mail_template')
                         .create(Shopware.Context.api);
-                    config.enabled = false;
                     config.mjmlContent = '';
                     this.mailTemplate.extensions.froshMjml = config;
                 }
+
+                this.loadFroshMjmlInheritance();
             },
         },
 
         async 'mailTemplate.extensions.froshMjml.enabled'(enabled) {
-            const config = this.mailTemplate?.extensions?.froshMjml;
+            const config = this.froshMjmlConfig;
 
-            if (!enabled || !config || config.mjmlContent) {
+            if (
+                !enabled ||
+                !config ||
+                config.mjmlContent ||
+                config.translated?.mjmlContent
+            ) {
                 return;
             }
 
@@ -41,11 +78,37 @@ Component.override('sw-mail-template-detail', {
     },
 
     methods: {
-        onMjmlToggle(value) {
-            const config = this.mailTemplate?.extensions?.froshMjml;
-            if (config) {
-                config.enabled = value;
+        async loadFroshMjmlInheritance() {
+            const { languageId, systemLanguageId } = Shopware.Context.api;
+            this.froshMjmlHasParentLanguage = languageId !== systemLanguageId;
+
+            if (!this.froshMjmlHasParentLanguage) {
+                this.froshMjmlInheritedEnabled = null;
+                return;
             }
+
+            const language = await this.repositoryFactory
+                .create('language')
+                .get(languageId, Shopware.Context.api);
+
+            const criteria = new Criteria(1, 1);
+            criteria.addFilter(
+                Criteria.equals('mailTemplateId', this.mailTemplate.id)
+            );
+
+            const inheritedLanguageContext = {
+                ...Shopware.Context.api,
+                languageId: language?.parentId ?? systemLanguageId,
+            };
+
+            const config = (
+                await this.repositoryFactory
+                    .create('frosh_mjml_mail_template')
+                    .search(criteria, inheritedLanguageContext)
+            ).first();
+
+            this.froshMjmlInheritedEnabled =
+                config?.translated?.enabled ?? config?.enabled ?? false;
         },
 
         async buildInitialMjmlContent() {
