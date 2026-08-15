@@ -72,7 +72,7 @@ class MjmlPreviewController extends AbstractController
         }
 
         try {
-            $type = $this->mailTemplateTypeRepository->search(new Criteria([$typeId]), $context)->first();
+            $type = $this->mailTemplateTypeRepository->search(new Criteria([$typeId]), $context)->getEntities()->first();
             if ($type === null) {
                 return [];
             }

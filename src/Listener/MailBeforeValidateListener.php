@@ -38,6 +38,7 @@ readonly class MailBeforeValidateListener
         /** @var MailTemplateEntity|null $mailTemplate */
         $mailTemplate = $this->mailTemplateRepository
             ->search(new Criteria([$templateId]), $event->getContext())
+            ->getEntities()
             ->first();
 
         /** @var FroshMjmlMailTemplateEntity|null $config */

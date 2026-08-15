@@ -12,5 +12,9 @@ parameters:
         -
             identifier: method.deprecatedClass
             message: "#StringTemplateRenderer#"
+        # EntitySearchResult: class hierarchy changes in v6.8.0, getEntities() stays available
+        -
+            identifier: method.deprecatedClass
+            message: "#Call to method getEntities\\(\\) of deprecated class Shopware\\\\Core\\\\Framework\\\\DataAbstractionLayer\\\\Search\\\\EntitySearchResult#"
     excludePaths:
         - vendor (?)

@@ -41,7 +41,7 @@ export function mergeCompleters(...completers) {
             let items;
             try {
                 items = fn(prefix);
-            } catch (e) {
+            } catch {
                 items = [];
             }
             if (!Array.isArray(items)) continue;
