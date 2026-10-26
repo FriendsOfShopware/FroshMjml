@@ -38,6 +38,6 @@ class LanguageExtension extends EntityExtension
 
     public function getDefinitionClass(): string
     {
-        return LanguageExtension::class;
+        return LanguageDefinition::class;
     }
 }
